@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>BroneSpace — Кімнати</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet" />
+  <style>
+    body {
+      background: linear-gradient(135deg, #ff9a9e 0%, #fad0c4 100%);
+      min-height: 100vh;
+      margin: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      color: #333;
+      display: flex;
+      overflow-x: hidden;
+    }
+    #sidebar {
+      width: 220px;
+      background: rgba(255, 255, 255, 0.15);
+      backdrop-filter: blur(10px);
+      box-shadow: 2px 0 15px rgba(0, 0, 0, 0.2);
+      padding-top: 60px;
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+      transition: width 0.3s ease;
+    }
+    #sidebar button.menu-btn {
+      background-color: transparent;
+      border: none;
+      color: #fff;
+      font-size: 1.1rem;
+      padding: 12px 20px;
+      text-align: left;
+      cursor: pointer;
+      border-radius: 5px;
+      transition: background 0.3s ease;
+    }
+    #sidebar button.menu-btn:hover {
+      background: #fff;
+      color: #d63384;
+      font-weight: 700;
+      box-shadow: 0 0 10px #fff;
+    }
+    #main-content {
+      flex-grow: 1;
+      padding: 40px;
+    }
+    .card {
+      border-radius: 15px;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    .card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+    }
+    h2 {
+      font-weight: 800;
+      margin-bottom: 30px;
+      text-shadow: 1px 1px 4px rgba(255, 255, 255, 0.5);
+    }
+    footer {
+      background: rgba(255, 255, 255, 0.15);
+      backdrop-filter: blur(5px);
+      color: #333;
+      font-weight: 500;
+      text-align: center;
+      padding: 15px;
+      position: fixed;
+      bottom: 0;
+      left: 220px;
+      width: calc(100% - 220px);
+    }
+    @media (max-width: 768px) {
+      #sidebar {
+        width: 100%;
+        flex-direction: row;
+        padding: 10px;
+      }
+      footer {
+        left: 0;
+        width: 100%;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<!-- Sidebar -->
+<div id="sidebar">
+  <form action="{% url 'all_bookings' %}" method="get">
+    <button type="submit" class="menu-btn">Всі бронювання</button>
+  </form>
+  <form action="{% url 'my_bookings' %}" method="get">
+    <button type="submit" class="menu-btn">Мої бронювання</button>
+  </form>
+  <form action="{% url 'rooms' %}" method="get">
+    <button type="submit" class="menu-btn">Кімнати</button>
+  </form>
+  <form action="{% url 'profile' %}" method="get">
+    <button type="submit" class="menu-btn">Профіль</button>
+  </form>
+</div>
+
+<!-- Main Content -->
+<div id="main-content" class="container">
+  <h2 class="text-center text-white">Список доступних кімнат</h2>
+
+  {% if rooms %}
+    <div class="row g-4">
+      {% for room in rooms %}
+        <div class="col-md-6 col-lg-4">
+          <div class="card shadow bg-white text-dark h-100">
+            <div class="card-body">
+              <h5 class="card-title text-primary">{{ room.name }}</h5>
+              <p class="card-text">
+                <strong>Опис:</strong> {{ room.description }}<br />
+                <strong>Місткість:</strong> {{ room.capacity }} осіб
+              </p>
+            </div>
+            <div class="card-footer bg-transparent border-0">
+              <a href="{% url 'book_room' room.id %}" class="btn btn-sm btn-outline-success">
+                Забронювати
+              </a>
+            </div>
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+  {% else %}
+    <div class="alert alert-info text-center fs-5 fw-semibold mt-4">
+      Наразі немає доступних кімнат.
+    </div>
+  {% endif %}
+</div>
+
+<!-- Footer -->
+<footer>
+  © 2025 BroneSpace — Усі кімнати
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/js/bootstrap.bundle.min.js"></script>
+
+</body>
+</html>

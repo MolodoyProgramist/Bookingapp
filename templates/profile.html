@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Профіль користувача</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #e9f0fb;
+            margin: 0;
+            padding: 20px;
+            color: #333;
+        }
+        .profile-container {
+            max-width: 600px;
+            margin: 30px auto;
+            background: #fff;
+            border-radius: 12px;
+            padding: 30px;
+            box-shadow: 0 6px 20px rgba(37,117,252,0.3);
+        }
+        h1 {
+            color: #2575fc;
+            margin-bottom: 25px;
+            text-align: center;
+        }
+        .profile-info {
+            font-size: 1.1rem;
+            line-height: 1.6;
+            color: #444;
+        }
+        .profile-info strong {
+            color: #1a1a1a;
+        }
+        .btn-logout {
+            display: block;
+            margin: 30px auto 0;
+            width: 150px;
+            background: #ff4d4d;
+            color: white;
+            padding: 12px 0;
+            border: none;
+            border-radius: 50px;
+            font-weight: 700;
+            font-size: 1rem;
+            text-align: center;
+            text-decoration: none;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        .btn-logout:hover {
+            background: #cc0000;
+        }
+    </style>
+</head>
+<body>
+    <div class="profile-container">
+        <h1>Профіль користувача</h1>
+        <div class="profile-info">
+            <p><strong>Ім'я користувача:</strong> {{ user.username }}</p>
+            <p><strong>Email:</strong> {{ user.email }}</p>
+        </div>
+        <form method="post" action="{% url 'logout' %}">
+            {% csrf_token %}
+            <button type="submit" class="btn-logout">Вийти</button>
+        </form>
+    </div>
+</body>
+</html>
